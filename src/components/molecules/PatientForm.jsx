@@ -38,9 +38,6 @@ const PatientForm = ({ onSubmit, onCancel, initialData = null, isLoading = false
     if (!formData.dateOfBirth) {
       newErrors.dateOfBirth = "Date of birth is required";
     }
-    if (!formData.gender) {
-      newErrors.gender = "Gender is required";
-    }
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
     }
@@ -131,7 +128,7 @@ const PatientForm = ({ onSubmit, onCancel, initialData = null, isLoading = false
                 error={errors.dateOfBirth}
                 required
               />
-              <Select
+<Select
                 label="Gender"
                 value={formData.gender}
                 onChange={(value) => handleChange("gender", value)}
@@ -142,7 +139,6 @@ const PatientForm = ({ onSubmit, onCancel, initialData = null, isLoading = false
                   { value: "Female", label: "Female" },
                   { value: "Other", label: "Other" }
                 ]}
-                required
               />
             </div>
           </div>
