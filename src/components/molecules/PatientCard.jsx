@@ -82,15 +82,28 @@ const PatientCard = ({
             </div>
           </div>
           
-          {patient.allergies.length > 0 && (
-            <div className="mt-3">
-              <div className="flex items-center text-sm text-warning">
-                <ApperIcon name="AlertTriangle" className="w-4 h-4 mr-1" />
-                <span className="font-medium">Allergies:</span>
-                <span className="ml-1">{patient.allergies.join(", ")}</span>
+{(() => {
+            // Handle allergies field - can be array (mock data) or string (database MultilineText)
+            let allergiesList = [];
+            if (patient.allergies) {
+              if (Array.isArray(patient.allergies)) {
+                allergiesList = patient.allergies;
+              } else if (typeof patient.allergies === 'string') {
+                // Split by comma or newline for MultilineText format
+                allergiesList = patient.allergies.split(/[,\n]/).map(item => item.trim()).filter(Boolean);
+              }
+            }
+            
+            return allergiesList.length > 0 ? (
+              <div className="mt-3">
+                <div className="flex items-center text-sm text-warning">
+                  <ApperIcon name="AlertTriangle" className="w-4 h-4 mr-1" />
+                  <span className="font-medium">Allergies:</span>
+                  <span className="ml-1">{allergiesList.join(", ")}</span>
+                </div>
               </div>
-            </div>
-          )}
+            ) : null;
+          })()}
           
           <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between text-xs text-gray-500">
             <span>Last Visit: {formatDate(patient.lastVisit)}</span>
